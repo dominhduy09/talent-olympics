@@ -3,6 +3,8 @@ import { getMarketplaceItems, purchaseItem } from '../api';
 import Web3 from 'web3';
 import styles from './Home.module.css';
 import './Home.css';
+import NFTGallery from '../components/NFTGallery';
+
 
 const Home = () => {
     const [items, setItems] = useState([]);
@@ -44,14 +46,14 @@ const Home = () => {
         }
     }, [web3]);
 
-    const handleBuy = async (itemId) => {
+    const handleBuy = async (itemId, price) => {
         if (!web3 || accounts.length === 0) {
             console.error("Web3 or accounts not initialized");
             return;
         }
 
         try {
-            await purchaseItem(itemId, accounts[0]);
+            await purchaseItem(itemId, accounts[0], price);
             alert("Item purchased successfully!");
             const fetchedItems = await getMarketplaceItems();
             setItems(fetchedItems);
@@ -73,17 +75,17 @@ const Home = () => {
                 ) : (
                     items.map((item, index) => (
                         <div key={index} className={styles.itemCard}>
-                            <h2>{item.name}</h2>
-                            <p>{item.description}</p>
+                            <h2>Token ID: {item.id}</h2>
+                            <p>Owner: {item.owner}</p>
                             <p>Price: {web3.utils.fromWei(item.price, 'ether')} ETH</p>
-                            {item.image && <img src={item.image} alt={item.name} />}
-                            <button onClick={() => handleBuy(item.id)} className={styles.btn}>Buy</button>
+                            <button onClick={() => handleBuy(item.id, item.price)} className={styles.btn}>Buy</button>
                         </div>
                     ))
                 )}
             </div>
         </div>
     );
+
 };
 
 export default Home;
