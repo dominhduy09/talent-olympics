@@ -1,0 +1,37 @@
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+.itemList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.itemCard {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 200px;
+    text-align: left;
+}
+
+.itemCard img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #218838;
+}
