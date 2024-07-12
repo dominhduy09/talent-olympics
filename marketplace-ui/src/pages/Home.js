@@ -1,10 +1,10 @@
+// src/pages/Home.js
 import React, { useState, useEffect } from 'react';
 import { getMarketplaceItems, purchaseItem } from '../api';
 import Web3 from 'web3';
 import styles from './Home.module.css';
 import './Home.css';
 import NFTGallery from '../components/NFTGallery';
-
 
 const Home = () => {
     const [items, setItems] = useState([]);
@@ -83,9 +83,12 @@ const Home = () => {
                     ))
                 )}
             </div>
+
+            <hr />
+
+            <NFTGallery web3={web3} accounts={accounts} /> {/* Integrating NFTGallery component */}
         </div>
     );
-
 };
 
 export default Home;
