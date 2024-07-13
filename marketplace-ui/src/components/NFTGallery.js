@@ -1,6 +1,7 @@
-// src/components/NFTGallery.js
 import React, { useState, useEffect } from 'react';
 import { purchaseItem } from '../api';
+
+// src/components/NFTGallery.js
 
 const NFTGallery = ({ web3, accounts }) => {
     const [nfts, setNFTs] = useState([]);
@@ -18,6 +19,17 @@ const NFTGallery = ({ web3, accounts }) => {
 
         fetchNFTs();
     }, []);
+
+    const fetchRandomNFTs = async () => {
+        try {
+            const response = await fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20');
+            const data = await response.json();
+            const randomNFTs = data.assets.sort(() => Math.random() - 0.5);
+            setNFTs(randomNFTs);
+        } catch (error) {
+            console.error('Error fetching random NFTs from OpenSea', error);
+        }
+    };
 
     const handleBuy = async (tokenId, price) => {
         if (!web3 || accounts.length === 0) {
@@ -39,6 +51,7 @@ const NFTGallery = ({ web3, accounts }) => {
     return (
         <div>
             <h1>OpenSea NFTs</h1>
+            <button onClick={fetchRandomNFTs}>Fetch Random NFTs</button>
             <div className="nft-gallery">
                 {nfts.map((nft, index) => (
                     <div key={index} className="nft-card">
