@@ -1,36 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { getMarketplaceItems } from '../api';
-import NFT from '../components/NFTGallery';
+import React from 'react';
+import './ItemListing.css';
 
-const Listings = () => {
-    const [items, setItems] = useState([]);
+const ItemListing = () => (
+    <div className="items-container">
+        <h1>ItemListing goes here...</h1>
+    </div>
+);
 
-    useEffect(() => {
-        const fetchItems = async () => {
-            try {
-                const fetchedItems = await getMarketplaceItems();
-                setItems(fetchedItems);
-            } catch (error) {
-                console.error("Error fetching marketplace items", error);
-            }
-        };
+export default ItemListing;
 
-        fetchItems();
-    }, []);
 
-    return (
-        <div>
-            <div className="items-container">
-                {items.length === 0 ? (
-                    <p>No items available</p>
-                ) : (
-                    items.map((item, index) => (
-                        <NFT key={index} item={item} />
-                    ))
-                )}
-            </div>
-        </div>
-    );
-};
 
-export default Listings;
