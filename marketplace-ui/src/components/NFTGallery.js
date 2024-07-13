@@ -1,5 +1,6 @@
 // src/components/NFTGallery.js
 import React, { useState, useEffect } from 'react';
+import { purchaseItem } from '../api';
 
 const NFTGallery = ({ web3, accounts }) => {
     const [nfts, setNFTs] = useState([]);
@@ -8,9 +9,6 @@ const NFTGallery = ({ web3, accounts }) => {
         const fetchNFTs = async () => {
             try {
                 const response = await fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch NFTs');
-                }
                 const data = await response.json();
                 setNFTs(data.assets);
             } catch (error) {
@@ -27,7 +25,15 @@ const NFTGallery = ({ web3, accounts }) => {
             return;
         }
 
-        // Handle buying logic here if needed
+        try {
+            await purchaseItem(tokenId, accounts[0], price);
+            alert("Item purchased successfully!");
+            // Refresh the NFT list after purchase
+            const updatedNFTs = nfts.filter(nft => nft.id !== tokenId);
+            setNFTs(updatedNFTs);
+        } catch (error) {
+            console.error("Error purchasing NFT", error);
+        }
     };
 
     return (

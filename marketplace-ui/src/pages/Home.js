@@ -83,9 +83,7 @@ const Home = () => {
                     ))
                 )}
             </div>
-
             <hr />
-
             <NFTGallery web3={web3} accounts={accounts} /> {/* Integrating NFTGallery component */}
         </div>
     );
